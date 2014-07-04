@@ -61,10 +61,13 @@ class CallableClientServer {
     /**
      * Removes a CallableClient object from this server.
      *
-     * @param  privateKey   hub connection for which this client was added
+     * @param   connection  hub connection for the registered client on behalf
+     *          of which the client will operate
      */
     public void removeClient( HubConnection connection ) {
-        clientHandler_.removeClient( connection );
+        if ( clientHandler_ != null) {
+            clientHandler_.removeClient( connection );
+        }
     }
 
     /**
@@ -72,7 +75,9 @@ class CallableClientServer {
      * clients can be added.
      */
     public void close() {
-        server_.removeHandler( clientHandler_ );
+        if ( server_ != null ) {
+            server_.removeHandler( clientHandler_ );
+        }
         server_ = null;
         clientHandler_ = null;
     }
